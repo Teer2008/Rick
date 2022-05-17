@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "../libc/ccolor.h"
+#include "../libc/memmove.h"
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -63,7 +64,12 @@ void terminal_putchar(char c)
         {
             terminal_column = 0;
             if (++terminal_row == VGA_HEIGHT)
-                terminal_row = 0;
+                memmmove(terminal_buffer, terminal_buffer + VGA_WIDTH, VGA_HEIGHT * (VGA_HEIGHT - 1) * sizeof(uint16_t));
+            size_t index = (VGA_HEIGHT - 1) * VGA_WIDTH;
+            for (size_t x = 0; x < VGA_WIDTH; ++x)
+            {
+                terminal_buffer[index + x] = vga_entry(' ', terminal_color);
+            }
         }
     }
 }
