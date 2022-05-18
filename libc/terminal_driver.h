@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include "../libc/ccolor.h"
 #include "../libc/memmove.h"
+#include "../libc/strlen.h"
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -14,14 +15,6 @@ size_t terminal_row;
 size_t terminal_column;
 uint8_t terminal_color;
 uint16_t *terminal_buffer;
-
-size_t strlen(const char *str)
-{
-    size_t len = 0;
-    while (str[len])
-        len++;
-    return len;
-}
 
 void terminal_initialize(void)
 {
